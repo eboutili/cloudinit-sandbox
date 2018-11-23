@@ -2,7 +2,7 @@
 
 ## Intro: 
 
-I'm kinda getting hooked on **Cloud-init/cloud-config**. It's just a Linux tool
+I'm kinda getting hooked on cloud-init/cloud-config. It's just a Linux tool
 for bootstrapping cloud images, but unlike similar tools it's almost always
 pre-installed. In other words, it's baked into most Linux images accross most
 cloud vendors. That feature alone gives you a lot of leverage right off the bat.
@@ -46,6 +46,22 @@ power_state:
 For a more comprehensive example, here's a cloud-config manifest I wrote after teaching
 myself how to stand up a Kubernetes cluster from scratch. It captures what I learned
 as self-documenting code, which I also like a lot.
+
+Here's what it does: 
+
+Everything the first example does, plus:
+
+- Deploy this node as a kubernetes master (or worker):
+  1. Configure the canonical kubernetes package repo
+  2. Download and install the components (kubeadm, kubectl, docker engine, etc.)
+  3. Enable the kubernetes master services
+
+It also creates a consistent login account for ssh access, overriding the
+(annoyingly) inconsistent defaults (sometimes "root",
+sometimes "ubuntu", etc.). The account in this example is called kubeplay: It
+creates the kubeplay user, associates whatever key pair you want (writes the
+provided public key to the authorized_keys file); and gives kubeplay sudo
+privileges.
 
 ```
 #cloud-config
@@ -105,18 +121,3 @@ users:
       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDgziKzVUGbkCohTBchVQgHHjL70mudkwUUX4h1cbW4FT9OvVePD3KsklUqOoLNb6Be11jlRTtmvGcOVBriLBWIhIu+UhQvnwDkePIx0WSwYocGMzttnQulKeCg9kBHGUaS2ofnNGC6bJZwWLC4EVqRW0v5p2eEOFWq70OJKv05V0evLLzDbShuLkVafDv8+5M7rMhd/Ik/4aV9/joQ1JW7EVZNlT89YHv3W3C+qmSlNxYBmyEoCRq82L8MSiYRaPz6DOiURwRYYX24sRUQIoyeKfXkkpbWcDK9JGvHpQ6yu63Z6NXLv0I5A68nUp57oqQCkgT2KI894G36GWEzVcdc4FEqc5AQkTeefq0DwFSvQtAvymg/jZBj9IaCN7vGAHxm+I1S3EFmT1zgQKxmgKXKMRHgmKBHxesiE/DObbOkoAwVNsBc0VhYLSFDwzGrgo1mBMDgUhWQtVHbh81wmpOjU5OnBcG4VbBlclDkLF7kMVSdl04rqu4fdnYbLGfiwfVgMNlZRQQT5X07NEd0d/6VZrTcgPNVsi5BDzCY+h2XWCLkhOykwg+WgnuFF+gU++Mfoq7mlNx53Owcsh5SnSoglvSmI1h5oFkhGaEENWeq0oXDfoi8lM4aid83JUIuBSA6sHoo1XzAFRkMKurg61KatleGn+7RT/+nPGJYSipqpw==
 ```
 
-Here's what it does: 
-
-Everything the first example does, plus:
-
-- Deploy this node as a kubernetes master (or worker):
-  1. Configure the canonical kubernetes package repo
-  2. Download and install the components (kubeadm, kubectl, docker engine, etc.)
-  3. Enable the kubernetes master services
-
-It also creates a consistent login account for ssh access, overriding the
-(annoyingly) inconsistent defaults (sometimes "root",
-sometimes "ubuntu", etc.). The account in this example is called kubeplay: It
-creates the kubeplay user, associates whatever key pair you want (writes the
-provided public key to the authorized_keys file); and gives kubeplay sudo
-privileges.

@@ -1,6 +1,6 @@
 # Cloud-init/Cloud-config
 
-## Intro: 
+## Intro:
 
 I'm kinda getting hooked on cloud-init/cloud-config. It's just a Linux tool for
 bootstrapping cloud images, but unlike similar tools it's almost always
@@ -9,12 +9,12 @@ cloud vendors. That feature alone gives you a lot of leverage right off the
 bat.  I've tested the examples below on 6 combinations: Centos and Ubuntu on
 DigitalOcean, AWS, and Azure.
 
-## Cloud-Config: 
+## Cloud-Config:
 
 The **Cloud-config** part is the spec. It's a coding format for user data
 (called custom data on Azure). User data lets you programatically control how
 a VM gets stood up from an image. 99% of the time that's done with bash
-scripting. By contrast, cloud-config is declarative, which I like a lot. 
+scripting. By contrast, cloud-config is declarative, which I like a lot.
 
 ## Cloud-init:
 The **cloud-init** part is the program itself, which (as I said above) is pretty much
@@ -48,13 +48,13 @@ For a more comprehensive example, here's a cloud-config manifest I wrote after t
 myself how to stand up a Kubernetes cluster from scratch. It captures what I learned
 as self-documenting code, which I also like a lot.
 
-Here's what it does: 
+Here's what it does:
 
 Everything the first example does, plus:
 
-- Deploy this node as a kubernetes master (or worker):
-  1. Configure the canonical kubernetes package repo
-  2. Download and install the components (kubeadm, kubectl, docker engine, etc.)
+- Deploy this node as a kubernetes master:
+  1. Configure the official kubernetes package repo (Note this is os-dependent, but cloud-init handles that)
+  2. Download and install the required components (this is also os-dependent)
   3. Enable the kubernetes master services
 
 It also creates a consistent login account for ssh access, overriding the
@@ -106,7 +106,7 @@ apt_sources:
        -----END PGP PUBLIC KEY BLOCK-----
 
 yum_repos:
-  kubernetes: 
+  kubernetes:
     baseurl: "https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64"
     gpgcheck: true
     name: Kubernetes

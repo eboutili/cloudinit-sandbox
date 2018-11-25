@@ -42,7 +42,7 @@ apt_sources:
 yum_repos:
   kubernetes: 
     baseurl: "https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64"
-    gpgcheck: true
+    gpgcheck: false
     name: Kubernetes
     enabled: true
     gpgkey: "https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg"

@@ -55,5 +55,5 @@ users:
     ssh_authorized_keys:
       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDgziKzVUGbkCohTBchVQgHHjL70mudkwUUX4h1cbW4FT9OvVePD3KsklUqOoLNb6Be11jlRTtmvGcOVBriLBWIhIu+UhQvnwDkePIx0WSwYocGMzttnQulKeCg9kBHGUaS2ofnNGC6bJZwWLC4EVqRW0v5p2eEOFWq70OJKv05V0evLLzDbShuLkVafDv8+5M7rMhd/Ik/4aV9/joQ1JW7EVZNlT89YHv3W3C+qmSlNxYBmyEoCRq82L8MSiYRaPz6DOiURwRYYX24sRUQIoyeKfXkkpbWcDK9JGvHpQ6yu63Z6NXLv0I5A68nUp57oqQCkgT2KI894G36GWEzVcdc4FEqc5AQkTeefq0DwFSvQtAvymg/jZBj9IaCN7vGAHxm+I1S3EFmT1zgQKxmgKXKMRHgmKBHxesiE/DObbOkoAwVNsBc0VhYLSFDwzGrgo1mBMDgUhWQtVHbh81wmpOjU5OnBcG4VbBlclDkLF7kMVSdl04rqu4fdnYbLGfiwfVgMNlZRQQT5X07NEd0d/6VZrTcgPNVsi5BDzCY+h2XWCLkhOykwg+WgnuFF+gU++Mfoq7mlNx53Owcsh5SnSoglvSmI1h5oFkhGaEENWeq0oXDfoi8lM4aid83JUIuBSA6sHoo1XzAFRkMKurg61KatleGn+7RT/+nPGJYSipqpw==
 #
-# Remember to replace the public key above with your own.
-#
+# Remember to replace the public key for the kubeplay user with your own public key.
+# 

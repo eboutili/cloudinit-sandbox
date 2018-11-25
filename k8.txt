@@ -1,0 +1,56 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+
+packages:
+  - kubelet
+  - kubeadm
+  - kubernetes-cni
+
+runcmd:
+  - export VERSION=18.06 && curl -sSL get.docker.com | sh
+  - systemctl start docker
+  - systemctl enable docker
+  - grep -q '^ID=.*centos' /etc/os-release && setenforce 0 && sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+
+  - kubeadm init  --pod-network-cidr=10.244.0.0/16 --service-cidr=10.96.0.0/12
+  - kubectl apply --kubeconfig /etc/kubernetes/admin.conf -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+#  - echo 'kubeadm token create --print-join-command' > /root/tokencreate_cmd
+
+apt_sources:
+- source: deb http://apt.kubernetes.io/ kubernetes-xenial main
+- key: |
+       -----BEGIN PGP PUBLIC KEY BLOCK-----
+
+       mQENBFrBaNsBCADrF18KCbsZlo4NjAvVecTBCnp6WcBQJ5oSh7+E98jX9YznUCrN
+       rgmeCcCMUvTDRDxfTaDJybaHugfba43nqhkbNpJ47YXsIa+YL6eEE9emSmQtjrSW
+       IiY+2YJYwsDgsgckF3duqkb02OdBQlh6IbHPoXB6H//b1PgZYsomB+841XW1LSJP
+       YlYbIrWfwDfQvtkFQI90r6NknVTQlpqQh5GLNWNYqRNrGQPmsB+NrUYrkl1nUt1L
+       RGu+rCe4bSaSmNbwKMQKkROE4kTiB72DPk7zH4Lm0uo0YFFWG4qsMIuqEihJ/9KN
+       X8GYBr+tWgyLooLlsdK3l+4dVqd8cjkJM1ExABEBAAG0QEdvb2dsZSBDbG91ZCBQ
+       YWNrYWdlcyBBdXRvbWF0aWMgU2lnbmluZyBLZXkgPGdjLXRlYW1AZ29vZ2xlLmNv
+       bT6JAT4EEwECACgFAlrBaNsCGy8FCQWjmoAGCwkIBwMCBhUIAgkKCwQWAgMBAh4B
+       AheAAAoJEGoDCyG6B/T78e8H/1WH2LN/nVNhm5TS1VYJG8B+IW8zS4BqyozxC9iJ
+       AJqZIVHXl8g8a/Hus8RfXR7cnYHcg8sjSaJfQhqO9RbKnffiuQgGrqwQxuC2jBa6
+       M/QKzejTeP0Mgi67pyrLJNWrFI71RhritQZmzTZ2PoWxfv6b+Tv5v0rPaG+ut1J4
+       7pn+kYgtUaKdsJz1umi6HzK6AacDf0C0CksJdKG7MOWsZcB4xeOxJYuy6NuO6Kcd
+       Ez8/XyEUjIuIOlhYTd0hH8E/SEBbXXft7/VBQC5wNq40izPi+6WFK/e1O42DIpzQ
+       749ogYQ1eodexPNhLzekKR3XhGrNXJ95r5KO10VrsLFNd8I=
+       =TKuP
+       -----END PGP PUBLIC KEY BLOCK-----
+
+yum_repos:
+  kubernetes: 
+    baseurl: "https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64"
+    gpgcheck: true
+    name: Kubernetes
+    enabled: true
+    gpgkey: "https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg"
+
+users:
+  - name: kubeplay
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDgziKzVUGbkCohTBchVQgHHjL70mudkwUUX4h1cbW4FT9OvVePD3KsklUqOoLNb6Be11jlRTtmvGcOVBriLBWIhIu+UhQvnwDkePIx0WSwYocGMzttnQulKeCg9kBHGUaS2ofnNGC6bJZwWLC4EVqRW0v5p2eEOFWq70OJKv05V0evLLzDbShuLkVafDv8+5M7rMhd/Ik/4aV9/joQ1JW7EVZNlT89YHv3W3C+qmSlNxYBmyEoCRq82L8MSiYRaPz6DOiURwRYYX24sRUQIoyeKfXkkpbWcDK9JGvHpQ6yu63Z6NXLv0I5A68nUp57oqQCkgT2KI894G36GWEzVcdc4FEqc5AQkTeefq0DwFSvQtAvymg/jZBj9IaCN7vGAHxm+I1S3EFmT1zgQKxmgKXKMRHgmKBHxesiE/DObbOkoAwVNsBc0VhYLSFDwzGrgo1mBMDgUhWQtVHbh81wmpOjU5OnBcG4VbBlclDkLF7kMVSdl04rqu4fdnYbLGfiwfVgMNlZRQQT5X07NEd0d/6VZrTcgPNVsi5BDzCY+h2XWCLkhOykwg+WgnuFF+gU++Mfoq7mlNx53Owcsh5SnSoglvSmI1h5oFkhGaEENWeq0oXDfoi8lM4aid83JUIuBSA6sHoo1XzAFRkMKurg61KatleGn+7RT/+nPGJYSipqpw==

@@ -2,11 +2,12 @@
 
 ## Intro: 
 
-I'm kinda getting hooked on cloud-init/cloud-config. It's just a Linux tool
-for bootstrapping cloud images, but unlike similar tools it's almost always
+I'm kinda getting hooked on cloud-init/cloud-config. It's just a Linux tool for
+bootstrapping cloud images, but unlike similar tools it's almost always
 pre-installed. In other words, it's baked into most Linux images accross most
-cloud vendors. That feature alone gives you a lot of leverage right off the bat.
-I've tested with Centos and Ubuntu on DigitalOcean, AWS, Azure, and GCE.
+cloud vendors. That feature alone gives you a lot of leverage right off the
+bat.  I've tested the examples below on 6 combinations: Centos and Ubuntu on
+DigitalOcean, AWS, and Azure.
 
 ## Cloud-Config: 
 

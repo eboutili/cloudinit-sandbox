@@ -7,7 +7,9 @@ bootstrapping cloud images, but unlike similar tools it's almost always
 pre-installed. In other words, it's baked into most Linux images accross most
 cloud vendors. That feature alone gives you a lot of leverage right off the
 bat.  I've tested the examples below on 6 combinations: Centos and Ubuntu on
-DigitalOcean, AWS, and Azure.
+DigitalOcean, AWS, and Azure. (There's an issue with Centos on DigitalOcean
+that [I'm still tryting to figure out though](https://stackoverflow.com/q/53473704/10703952)).
+
 
 ## Cloud-Config:
 

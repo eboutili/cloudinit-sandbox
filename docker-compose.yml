@@ -3,4 +3,4 @@ services:
   hello_world:
     image: ubuntu
     container_name: myhw
-    command: [/bin/echo, 'Hello world']
+    command: ["/bin/sleep", "120"]
